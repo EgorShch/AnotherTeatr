@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="eu" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>BUYSELL</title>
+  </head>
+  <body>
+    <hr />
+
+    <div th:each="img: ${images}">
+      <img th:src="@{'/images/' + ${img.id}}" height="100px" />
+    </div>
+
+    <h3>Создать новый товар</h3>
+    <form action="/products/create" method="post" enctype="multipart/form-data">
+      <!-- Название объявления: <input type="text" name="title"/><br><br>
+    Описание объявления: <input type="text" name="description"/><br><br>
+    Цена: <input type="number" name="price"/><br><br>
+    Город: <input type="text" name="city"/><br><br>
+    Имя: <input type="text" name="author"/><br><br>-->
+      Фотография: <input type="file" name="file" /><br /><br />
+
+      <input type="submit" value="Добавить товар" />
+    </form>
+
+    <h3>Создать новый Фильм</h3>
+    <form action="/api/v1/films" method="post" enctype="multipart/form-data">
+      ageRating: <input type="number" name="ageRating" /><br /><br />
+      description: <input type="text" name="description" /><br /><br />
+      duration: <input type="number" name="duration" /><br /><br />
+      genre: <input type="text" name="genre" /><br /><br />
+      producer: <input type="text" name="producer" /><br /><br />
+      Фотография: <input type="file" name="file" /><br /><br />
+
+      <input type="submit" value="Добавить товар" />
+    </form>
+  </body>
+</html>
