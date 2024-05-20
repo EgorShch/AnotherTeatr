@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Выбор мест в кинотеатре</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .seat {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      .seat.available {
+        background-color: #28a745;
+      }
+      .seat.selected {
+        background-color: #ffc107;
+      }
+      .seat.occupied {
+        background-color: #dc3545;
+        cursor: not-allowed;
+      }
+      .screen {
+        background-color: #343a40;
+        height: 40px;
+        margin: 20px 0;
+        text-align: center;
+        color: white;
+        line-height: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="my-4 text-center">Выберите места</h1>
+      <div class="screen">Экран</div>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <div class="d-flex flex-wrap justify-content-center">
+            <!-- Dynamically generate seats based on 'places' -->
+            <div
+              th:each="place : ${places}"
+              th:class="'seat ' + (${place.status})"
+              th:attr="data-seat-id=${place.id}"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center my-4">
+        <button id="confirm" class="btn btn-primary">Подтвердить выбор</button>
+      </div>
+    </div>
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      document.addEventListener('DOMContentLoaded', function() {
+          const seats = document.querySelectorAll('.seat.available');
+          const seanceId = [[${seanceId}]];
+          const date = [[${date}]];
+
+          seats.forEach(seat => {
+              seat.addEventListener('click', function() {
+                  this.classList.toggle('selected');
+              });
+          });
+
+          document.getElementById('confirm').addEventListener('click', function() {
+              const selectedSeats = document.querySelectorAll('.seat.selected');
+
+              let tickets = [];
+              selectedSeats.forEach(seat => {
+                  tickets.push({
+                      date: date,
+                      placeId: seat.getAttribute('data-seat-id'),
+                      seanceId: seanceId
+                  });
+              });
+
+              $.ajax({
+                  url: '/products/saveTickets',
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: JSON.stringify(tickets),
+                  success: function(response) {
+                      // Handle success response
+                      alert('Места успешно забронированы!');
+                      window.location.reload();
+                  },
+                  error: function(error) {
+                      // Handle error response
+                      alert('Произошла ошибка при бронировании мест.');
+                  }
+              });
+          });
+      });
+      /*]]>*/
+    </script>
+  </body>
+</html>

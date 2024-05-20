@@ -27,10 +27,6 @@ public class Image {
     @Lob
     byte[] bytes;
 
-    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     Film film;
-
-    int idForFilm;
-
-
 }

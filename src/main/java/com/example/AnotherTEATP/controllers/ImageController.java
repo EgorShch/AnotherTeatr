@@ -28,7 +28,7 @@ public class ImageController {
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
     }
 
-    @GetMapping("/images/filmId/{id}")
+   /* @GetMapping("/images/filmId/{id}")
     private ResponseEntity<?> getImageByFilmId(@PathVariable int id){
         Image image = null;
         image = imageRepository.findByIdForFilm(id);
@@ -37,6 +37,6 @@ public class ImageController {
                 .contentType(MediaType.valueOf(image.getContentType()))
                 .contentLength(image.getSize())
                 .body(new InputStreamResource(new ByteArrayInputStream(image.getBytes())));
-    }
+    }*/
 
 }

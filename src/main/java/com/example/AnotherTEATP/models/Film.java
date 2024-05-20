@@ -36,8 +36,12 @@ public class Film {
 
     String producer;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "film")
-    Image image;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "film")
+    List<Image> images = new ArrayList<>();
+
+    public void addImage(Image image){
+        images.add(image);
+    }
 
     int previewImageId;
 

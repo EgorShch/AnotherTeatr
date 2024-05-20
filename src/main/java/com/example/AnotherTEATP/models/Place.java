@@ -24,4 +24,7 @@ public class Place {
     @Column(name = "col")
     int column;
 
+    @Transient
+    String status;
+
 }

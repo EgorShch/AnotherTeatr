@@ -1,10 +1,12 @@
 package com.example.AnotherTEATP.services;
 
+import com.example.AnotherTEATP.models.Place;
 import com.example.AnotherTEATP.models.Ticket;
 import com.example.AnotherTEATP.repositories.TicketRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +29,15 @@ public class TicketService {
 
     public void deleteTicket(int id){
         ticketRepository.deleteById(id);
+    }
+
+    public List<Integer> getOccupiedSeats (int seanceId){
+        List<Ticket> tickets = ticketRepository.findBySeanceId(seanceId);
+        List<Integer> occupiedSeats = new ArrayList<>();
+        for (Ticket ticket : tickets){
+            occupiedSeats.add(ticket.getPlaceId());
+        }
+        return occupiedSeats;
     }
 
 }

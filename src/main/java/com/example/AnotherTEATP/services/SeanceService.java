@@ -29,4 +29,8 @@ public class SeanceService {
         seanceRepository.deleteById(id);
     }
 
+    public int getHallIdById(int id){
+        return getSeance(id).getHallId();
+    }
+
 }

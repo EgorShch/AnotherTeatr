@@ -30,9 +30,9 @@ public class FilmService
         if (file.getSize() != 0) {
             image = toImageEntity(file);
         }
-        film.setImage(image);
+        film.addImage(image);
         Film filmFromDb = filmRepository.save(film);
-        filmFromDb.setPreviewImageId(filmFromDb.getImage().getId());
+        filmFromDb.setPreviewImageId(filmFromDb.getImages().getFirst().getId());
         filmRepository.save(film);
     }
     private Image toImageEntity(MultipartFile file) throws IOException {
