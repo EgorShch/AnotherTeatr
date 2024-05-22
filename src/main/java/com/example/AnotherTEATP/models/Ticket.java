@@ -26,4 +26,8 @@ public class Ticket {
 
     @Column(name = "seance_id")
     int seanceId;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn
+    User user;
 }

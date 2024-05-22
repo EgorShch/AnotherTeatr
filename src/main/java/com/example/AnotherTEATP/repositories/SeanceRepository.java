@@ -3,6 +3,9 @@ package com.example.AnotherTEATP.repositories;
 import com.example.AnotherTEATP.models.Seance;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SeanceRepository extends JpaRepository<Seance, Integer> {
+import java.time.LocalDate;
+import java.util.List;
 
+public interface SeanceRepository extends JpaRepository<Seance, Integer> {
+    List<Seance> findSeancesByDate(LocalDate localDate);
 }

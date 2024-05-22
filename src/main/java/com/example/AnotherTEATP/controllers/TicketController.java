@@ -6,6 +6,7 @@ import com.example.AnotherTEATP.services.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,8 +27,8 @@ public class TicketController {
     }
 
     @PostMapping()
-    public String saveTicket(@RequestBody Ticket ticket){
-        ticketService.saveTicket(ticket);
+    public String saveTicket(@RequestBody Ticket ticket, Principal principal){
+        ticketService.saveTicket(principal,ticket);
         return "Готово";
     }
 

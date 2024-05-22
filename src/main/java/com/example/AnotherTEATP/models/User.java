@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor
@@ -40,12 +37,19 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Set<Role> roles = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+    List<Ticket> tickets = new ArrayList<>();
+
     @Column(name = "date_of_created")
     LocalDateTime dateOfCreated;
 
     @PrePersist
     private void init(){
         dateOfCreated = LocalDateTime.now();
+    }
+
+    public boolean isAdmin(){
+        return roles.contains(Role.ROLE_ADMIN);
     }
 
     @Override

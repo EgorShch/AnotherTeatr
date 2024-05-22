@@ -33,8 +33,8 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/hello")
+    @GetMapping("/")
     public String hello(){
-        return "hello";
+        return "redirect:/products/seances";
     }
 }

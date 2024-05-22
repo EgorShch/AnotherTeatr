@@ -5,6 +5,7 @@ import com.example.AnotherTEATP.repositories.SeanceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -15,6 +16,10 @@ public class SeanceService {
 
     public List<Seance> seances(){
         return seanceRepository.findAll();
+    }
+
+    public List<Seance> getSeancesByDate(LocalDate date){
+        return seanceRepository.findSeancesByDate(date);
     }
 
     public Seance getSeance(int id){
