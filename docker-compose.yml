@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Spring Boot приложение
+  app:
+    image: spring-teatp:latest  # Ваш готовый образ приложения
+    container_name: springboot-app
+    ports:
+      - "8080:8081"  # Пробрасываем порт приложения
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/TEATP  # Настройка подключения к БД
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update  # Создание схемы при запуске (можно поменять на validate)
+    depends_on:
+      - db  # Указываем, что приложение зависит от запуска PostgreSQL
+
+  # PostgreSQL база данных
+  db:
+    image: postgres:15  # Используем официальное изображение PostgreSQL
+    container_name: postgres-db
+    ports:
+      - "5432:5432"  # Пробрасываем порт PostgreSQL
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: TEATP  # Автоматическое создание базы данных
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data  # Хранение данных вне контейнера
+
+  # PgAdmin для управления БД
+  pgadmin:
+    image: dpage/pgadmin4  # Официальное изображение PgAdmin
+    container_name: pgadmin
+    ports:
+      - "5050:80"  # Пробрасываем порт PgAdmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com  # Логин для входа
+      PGADMIN_DEFAULT_PASSWORD: 1  # Пароль для входа
+    depends_on:
+      - db  # Указываем зависимость от PostgreSQL
+
+volumes:
+  postgres-data:
